@@ -20,12 +20,14 @@ import (
 	extensionscontroller "github.com/gardener/gardener/extensions/pkg/controller"
 	"github.com/gardener/gardener/extensions/pkg/controller/controlplane/genericactuator"
 	"github.com/gardener/gardener/pkg/utils"
+
 	"github.com/metal-stack/gardener-extension-provider-metal/pkg/apis/config"
 	apismetal "github.com/metal-stack/gardener-extension-provider-metal/pkg/apis/metal"
 	"github.com/metal-stack/gardener-extension-provider-metal/pkg/apis/metal/helper"
 
-	metalclient "github.com/metal-stack/gardener-extension-provider-metal/pkg/metal/client"
 	metalgo "github.com/metal-stack/metal-go"
+
+	metalclient "github.com/metal-stack/gardener-extension-provider-metal/pkg/metal/client"
 
 	"github.com/metal-stack/gardener-extension-provider-metal/pkg/apis/metal/validation"
 
@@ -660,7 +662,7 @@ func (vp *valuesProvider) getControlPlaneShootChartValues(ctx context.Context, m
 	apiserverIPs := dns.Spec.Targets
 
 	cwnpsValues := map[string]interface{}{
-		"allowHttps": !infrastructure.HTTPSToApiserverOnly,
+		"allowHttps": !infrastructure.HTTPSToAPIServerOnly,
 	}
 
 	values := map[string]interface{}{
