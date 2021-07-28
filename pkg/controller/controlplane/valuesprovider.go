@@ -653,22 +653,14 @@ func (vp *valuesProvider) getControlPlaneShootChartValues(ctx context.Context, m
 	}
 
 	// get apiserver ip adresses from external dns entry
-	extDNS := &dnsv1alpha1.DNSEntry{}
-	err = vp.client.Get(ctx, types.NamespacedName{Name: "external", Namespace: namespace}, extDNS)
+	dns := &dnsv1alpha1.DNSEntry{}
+	err = vp.client.Get(ctx, types.NamespacedName{Name: "external", Namespace: namespace}, dns)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to get dnsEntry")
 	}
-	apiserverIPs := extDNS.Spec.Targets
-
-	// get apiserver ip adresses from internal dns entry
-	intDNS := &dnsv1alpha1.DNSEntry{}
-	err = vp.client.Get(ctx, types.NamespacedName{Name: "internal", Namespace: namespace}, extDNS)
-	if err != nil {
-		return nil, errors.Wrap(err, "failed to get dnsEntry")
-	}
+	apiserverIPs := dns.Spec.Targets
 
 	cwnpsValues := map[string]interface{}{
-		"internalDNSAddr":    intDNS.Spec.DNSName,
 		"onlyApiserverHttps": infrastructure.OnlyHTTPSToAPIServer,
 	}
 

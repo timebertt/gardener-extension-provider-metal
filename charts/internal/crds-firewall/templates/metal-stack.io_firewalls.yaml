@@ -53,6 +53,9 @@ spec:
                   description: ControllerVersion holds the firewall-controller version
                     to reconcile.
                   type: string
+                dnsPort:
+                  description: DNSPort specifies port to which DNS proxy should be bound
+                  type: integer
                 dnsServerAddress:
                   description: DNSServerAddress specifies DNS server address used by
                     DNS proxy
@@ -159,6 +162,8 @@ spec:
             status:
               description: FirewallStatus defines the observed state of Firewall
               properties:
+                controllerVersion:
+                  type: string
                 lastRun:
                   format: date-time
                   type: string
@@ -240,6 +245,7 @@ spec:
                     - rules
                   type: object
               required:
+                - controllerVersion
                 - stats
               type: object
           type: object
